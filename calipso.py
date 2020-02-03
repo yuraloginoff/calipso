@@ -23,7 +23,6 @@ scrollbar.grid(column=1, row=0, sticky=(N, S))
 # txt to communicate back to the scrollbar
 txt['yscrollcommand'] = scrollbar.set
 
-
 # set focus to text widget
 txt.focus()
 
