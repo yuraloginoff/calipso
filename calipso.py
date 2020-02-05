@@ -9,12 +9,18 @@ root.title("Calipso")
 # setting window size
 root.geometry('640x480')
 
+mainframe = ttk.Frame(root, padding="20")
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+
 # handling window resize
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0, weight=1)
+
 
 # create text widget
-txt = Text(root, wrap="word")
+txt = Text(mainframe, wrap="word", padx=10, pady=10)
 txt.grid(column=0, row=0, sticky="nsew")
 txt.focus()  # autofocus
 

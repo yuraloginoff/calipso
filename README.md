@@ -8,7 +8,7 @@ Calipso is a text editor for writers. In early development.
 
 ## TODO
 
-Add features:
+### Add features:
 
 - ~~scrollbar~~
 - ~~menu~~
@@ -16,3 +16,7 @@ Add features:
 - save
 - save as
 - close
+
+### Fix bugs:
+
+- dark title bar on OS X
