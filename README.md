@@ -2,10 +2,6 @@
 
 Calipso is a text editor for writers. In early development.
 
-## Run and watch for changes:
-
-`watchmedo shell-command --patterns="\*.py" --command='python3 calipso.py'`
-
 ## TODO
 
 ### Add features:
@@ -19,4 +15,12 @@ Calipso is a text editor for writers. In early development.
 
 ### Fix bugs:
 
-- dark title bar on OS X
+- ~~dark title bar on OS X.~~
+  Fixed for:
+
+```
+Python 3.7.6
+>>> import tkinter
+>>> tkinter.Tcl().eval('info patchlevel')
+'8.5.9'
+```
