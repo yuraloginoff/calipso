@@ -4,6 +4,17 @@ from tkinter import ttk
 # import tkinter.tkFileDialog
 from tkinter import font
 
+# colors
+gray0 = '#f8f9fa'
+gray1 = '#f1f3f5'
+gray2 = '#e9ecef'
+gray3 = '#dee2e6'
+gray4 = '#ced4da'
+gray5 = '#adb5bd'
+gray6 = '#868e96'
+gray7 = '#495057'
+gray8 = '#343a40'
+gray9 = '#212529'
 
 # create blank window
 root = Tk()
@@ -11,8 +22,11 @@ root.title("Calipso")
 
 # setting window size
 root.geometry('640x480')
+root.update()
 
-mainframe = ttk.Frame(root, padding="20")
+mainframe = Frame(root)
+mainframe['background'] = gray8
+mainframe['padx'] = 10*root.winfo_width()/100
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 
 # handling window resize
@@ -22,6 +36,13 @@ mainframe.columnconfigure(0, weight=1)
 mainframe.rowconfigure(0, weight=1)
 
 
+def d(event):
+    mainframe['padx'] = 10*root.winfo_width()/100
+
+
+root.bind('<Configure>', d)
+
+
 # Fonts
 txtFont = font.Font(family='Avenir Next', size='20')
 
@@ -29,6 +50,10 @@ txtFont = font.Font(family='Avenir Next', size='20')
 txt = Text(mainframe, wrap="word", padx=10, pady=6, font=txtFont)
 txt.grid(column=0, row=0, sticky="nsew")
 txt.focus()  # autofocus
+txt['background'] = gray8
+txt['foreground'] = gray2
+txt['insertbackground'] = gray2  # text cursor
+txt['highlightthickness'] = 0  # no widget border
 
 
 txt.insert('1.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
