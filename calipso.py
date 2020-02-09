@@ -21,7 +21,8 @@ root = Tk()
 root.title("Calipso")
 
 # setting window size
-root.geometry('640x480')
+root.geometry('640x480+0+0')
+root.minsize(600, 300)
 root.update()
 
 mainframe = Frame(root)
