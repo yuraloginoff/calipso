@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
+
+import os
 from tkinter import *
 from tkinter import ttk
-# import tkinter.tkFileDialog
 from tkinter import font
+from tkinter import filedialog
+from tkinter import messagebox
 
 # colors
 gray0 = '#f8f9fa'
@@ -16,9 +19,13 @@ gray7 = '#495057'
 gray8 = '#343a40'
 gray9 = '#212529'
 
+APP_NAME = "Calipso"
+_fileName = None
+
 # create blank window
 root = Tk()
-root.title("Calipso")
+root.title(APP_NAME)
+
 
 # setting window size
 root.geometry('640x480+0+0')
@@ -63,7 +70,6 @@ scrollbar = Scrollbar(root, orient=VERTICAL, command=txt.yview)
 scrollbar.grid(column=1, row=0, sticky=(N, S))
 scrollbar['background'] = gray8
 scrollbar['highlightthickness'] = 0
-
 # txt to communicate back to the scrollbar
 txt['yscrollcommand'] = scrollbar.set
 
@@ -82,13 +88,47 @@ def newFile():
     print('new file')
 
 
-def save_as():
-    print('new file')
+def openFile():
+    filename = filedialog.askopenfilename()
 
 
-menu_file.add_command(label='New', command=newFile)
-menu_file.add_command(label='Save as', command=save_as)
-# menu_file.add_command(label='Close', command=closeFile)
+def writeToFile(_fileName):
+    try:
+        content = txt.get(1.0, 'end')
+        with open(_fileName, 'w') as theFile:
+            theFile.write(content)
+    except IOError:
+        messagebox.showwarning("Save", "Could not save the file.")
+
+
+def saveAs():
+    filename = filedialog.asksaveasfilename(
+        defaultextension='.txt',
+        filetypes=[
+            ('TXT (*.txt)', 'TXT'), ("All Files", "*.*")
+        ])
+
+    if filename:
+        global _fileName
+        _fileName = filename
+        writeToFile(_fileName)
+        root.title('{} - {}'.format(os.path.basename(_fileName), APP_NAME))
+    return "break"
+
+
+def save(event=None):
+    global _fileName
+    if not _fileName:
+        saveAs()
+    else:
+        writeToFile(_fileName)
+    return "break"
+
+
+# menu_file.add_command(label='New', command=newFile)
+# menu_file.add_command(label='Open', command=openFile)
+menu_file.add_command(label='Save as', command=saveAs)
+menu_file.add_command(label='Save', command=save)
 
 
 root.mainloop()
