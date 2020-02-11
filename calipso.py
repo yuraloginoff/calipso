@@ -78,7 +78,22 @@ def newFile():
 
 
 def openFile():
-    filename = filedialog.askopenfilename()
+    filename = filedialog.askopenfilename(
+        title='Open file',
+        filetypes=[('TXT (*.txt)', 'TXT'), ("All Files", "*.*")]
+    )
+    try:
+        if filename:
+            theFile = open(filename)
+            txt.delete('1.0', END)
+            txt.insert('1.0', theFile.read())
+            theFile.close()
+            root.title('{} - {}'.format(os.path.basename(filename), APP_NAME))
+        elif filename == '':
+            # Cancel was clicked
+            messagebox.showinfo("Cancel", "You clicked Cancel")
+    except IOError:
+        messagebox.showinfo("Error", "Could not open file")
 
 
 def writeToFile(_fileName):
@@ -115,7 +130,7 @@ def save(event=None):
 
 
 # menu_file.add_command(label='New', command=newFile)
-# menu_file.add_command(label='Open', command=openFile)
+menu_file.add_command(label='Open', command=openFile)
 menu_file.add_command(label='Save as', command=saveAs)
 menu_file.add_command(label='Save', command=save)
 
