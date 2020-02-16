@@ -52,7 +52,7 @@ txt['foreground'] = gray2
 txt['insertbackground'] = gray2  # text cursor
 txt['highlightthickness'] = 0  # no widget border
 
-txt.insert('1.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+# txt.insert('1.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
 
 # create scrollbar
 scrollbar = Scrollbar(root, orient=VERTICAL, command=txt.yview)
@@ -71,6 +71,7 @@ menu_file = Menu(menubar)
 menu_edit = Menu(menubar)
 menubar.add_cascade(menu=menu_file, label='File')
 menubar.add_cascade(menu=menu_edit, label='Edit')
+menubar.activate(1)
 
 
 def newFile():
@@ -89,6 +90,10 @@ def openFile():
             txt.insert('1.0', theFile.read())
             theFile.close()
             root.title('{} - {}'.format(os.path.basename(filename), APP_NAME))
+            menu_file.entryconfigure(0, state='normal')
+            menu_file.entryconfigure(1, state='normal')
+            menu_file.entryconfigure(2, state='normal')
+
         elif filename == '':
             # Cancel was clicked
             messagebox.showinfo("Cancel", "You clicked Cancel")
@@ -99,8 +104,12 @@ def openFile():
 def writeToFile(_fileName):
     try:
         content = txt.get(1.0, 'end')
+        menu_file.entryconfigure(0, state='normal')
+        menu_file.entryconfigure(1, state='normal')
+        menu_file.entryconfigure(2, state='normal')
         with open(_fileName, 'w') as theFile:
             theFile.write(content)
+            theFile.close()
     except IOError:
         messagebox.showwarning("Save", "Could not save the file.")
 
@@ -117,7 +126,6 @@ def saveAs():
         _fileName = filename
         writeToFile(_fileName)
         root.title('{} - {}'.format(os.path.basename(_fileName), APP_NAME))
-    return "break"
 
 
 def save(event=None):
@@ -126,7 +134,6 @@ def save(event=None):
         saveAs()
     else:
         writeToFile(_fileName)
-    return "break"
 
 
 # menu_file.add_command(label='New', command=newFile)
